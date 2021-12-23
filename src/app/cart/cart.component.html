@@ -1,0 +1,43 @@
+<h2>Your cart</h2>
+
+<div class="row"
+    *ngIf="cartList$.getNbrProducts() > 0; else elseBlockCartList">
+
+	<div *ngFor="let product of cartList$.productsList" class="col-md-4">
+		<div class="card">
+
+			<div class="card-header">
+				{{product.name}} 
+        <span class="badge badge-secondary float-right">
+          {{product.price}} $
+        </span>
+			</div>
+
+			<div class="card-body">
+        <p *ngIf="product.description; else elseBlockDescriptionEmpty" class="card-text">
+					{{product.description}}
+				</p>
+        <ng-template #elseBlockDescriptionEmpty>
+          <p class="card-text">
+            No description provided
+          </p>
+        </ng-template>
+			</div>
+
+			<div class="card-body">
+				<a [title]="product.name + 'details'" 
+           [routerLink]="['/product', product.id]"
+           class="card-link">
+					Details
+				</a>
+			</div>
+		</div>
+	</div>
+
+</div>
+
+<ng-template #elseBlockCartList>
+  <div class="alert alert-info" role="alert">
+      Your cart is empty
+  </div>
+</ng-template>
